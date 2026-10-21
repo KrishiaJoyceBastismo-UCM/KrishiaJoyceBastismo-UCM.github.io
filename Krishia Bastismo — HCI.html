@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hi, I’m Krishia — Personal Site</title>
+<style>
+:root{--bg:#0f1020;--bg2:#181a33;--card:#1e2142;--text:#f2f3ff;--muted:#a9acd0;--accent:#ff6b9d;--accent2:#4cc9f0;--accent3:#ffd166;--ok:#06d6a0;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f6f7ff;--bg2:#fff;--card:#fff;--text:#1b1d3a;--muted:#5b5f85;--shadow:0 10px 30px rgba(60,60,120,.15)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .4s,color .4s}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent3);outline-offset:3px}
+#glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(76,201,240,.18),transparent 65%);transform:translate(-50%,-50%);left:50%;top:30%}
+header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px 5vw;padding-top:calc(12px + env(safe-area-inset-top,0px));background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{font-weight:800;letter-spacing:.5px}.logo span{color:var(--accent)}
+nav{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+nav a{text-decoration:none;padding:6px 12px;border-radius:999px;font-size:.9rem;color:var(--muted);transition:.2s}
+nav a:hover,nav a.active{background:var(--card);color:var(--text)}
+.pill{border:0;cursor:pointer;background:var(--card);color:var(--text);padding:6px 12px;border-radius:999px;font-size:.85rem;box-shadow:var(--shadow)}
+#progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));z-index:60}
+section{position:relative;z-index:1;padding:90px 6vw 40px;max-width:1100px;margin:auto}
+h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:6px}
+h2 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);margin-bottom:24px}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+#hero{min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center;padding-top:110px}
+.hello{color:var(--accent2);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.85rem}
+h1{font-size:clamp(2.4rem,7vw,4.6rem);line-height:1.05;margin:8px 0 12px}
+h1 .name{background:linear-gradient(90deg,var(--accent),var(--accent3),var(--accent2),var(--accent));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:300% 0}}
+.typed{font-size:clamp(1.1rem,3vw,1.6rem);min-height:2em;color:var(--muted)}
+.typed b{color:var(--text)}
+.caret{display:inline-block;width:3px;height:1.1em;background:var(--accent);vertical-align:-3px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{border:0;cursor:pointer;text-decoration:none;font-weight:700;padding:13px 22px;border-radius:999px;font-size:1rem;transition:.25s;display:inline-block}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#ff9a6b);color:#fff;box-shadow:0 8px 24px rgba(255,107,157,.4)}
+.btn.ghost{background:transparent;border:2px solid var(--accent2);color:var(--text)}
+.btn:hover{transform:translateY(-3px) scale(1.03)}
+.hint{margin-top:18px;font-size:.9rem;color:var(--muted)}
+.hint kbd{background:var(--card);padding:2px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.15)}
+.photo-wrap{position:relative;width:min(340px,80vw);aspect-ratio:1;margin:auto}
+.photo{position:absolute;inset:14%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:4rem;font-weight:800;color:#fff;box-shadow:0 0 0 6px var(--bg2),0 0 60px rgba(255,107,157,.45);cursor:pointer;transition:transform .4s}
+.photo:hover{transform:rotate(-4deg) scale(1.05)}
+.orbit{position:absolute;inset:0;animation:spin 18s linear infinite}
+.orbit span{position:absolute;font-size:1.8rem;left:50%;top:50%;margin:-.9rem;transform:rotate(var(--a)) translate(150px) rotate(calc(-1*var(--a)));animation:counter 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes counter{to{rotate:-360deg}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:20px}
+.stat{background:var(--card);padding:20px;border-radius:var(--radius);text-align:center;box-shadow:var(--shadow)}
+.stat strong{font-size:2.2rem;display:block;color:var(--accent3)}
+.about-text{background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow);font-size:1.05rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.flip{perspective:900px;height:200px;cursor:pointer;background:none;border:0;color:inherit;text-align:center;font:inherit}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-inner,.flip:hover .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;box-shadow:var(--shadow)}
+.front{background:var(--card)}.front .emoji{font-size:3rem}
+.back{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;transform:rotateY(180deg);font-size:.95rem}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tag{border:2px solid transparent;background:var(--card);color:var(--text);padding:6px 14px;border-radius:999px;cursor:pointer;font-size:.9rem}
+.tag.on{border-color:var(--accent);background:rgba(255,107,157,.15)}
+.skill{background:var(--card);padding:14px 18px;border-radius:14px;margin-bottom:12px}
+.skill.hide{display:none}
+.skill .row{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px}
+.bar{height:10px;border-radius:99px;background:rgba(128,128,160,.2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--ok));transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.game{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.hud{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-weight:700;margin-bottom:10px}
+#arena{position:relative;height:340px;border-radius:14px;background:radial-gradient(circle at 30% 20%,#2a2d6b,#0d0e22);overflow:hidden;cursor:crosshair;user-select:none;touch-action:manipulation;color:#fff}
+#line{position:absolute;left:0;right:0;bottom:60px;height:4px;background:var(--accent3);box-shadow:0 0 14px var(--accent3)}
+.beat{position:absolute;top:0;left:50%;width:46px;height:46px;margin-left:-23px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,var(--accent2));box-shadow:0 0 18px var(--accent2);will-change:transform}
+#judge{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:1.8rem;font-weight:800;opacity:0;transition:opacity .25s;pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:rgba(10,10,30,.65);color:#fff;padding:20px}
+#pad{width:100%;margin-top:12px;font-size:1.2rem;padding:18px;border-radius:var(--radius);touch-action:manipulation}
+#pad.hitfx{transform:scale(.97);filter:brightness(1.25)}
+.truths{display:grid;gap:12px}
+.truth{background:var(--card);border:2px solid transparent;color:var(--text);text-align:left;padding:16px 18px;border-radius:14px;cursor:pointer;font:inherit;transition:.2s;box-shadow:var(--shadow)}
+.truth:hover:not(:disabled){transform:translateX(6px);border-color:var(--accent2)}
+.truth.right{border-color:var(--ok);background:rgba(6,214,160,.15)}
+.truth.wrong{border-color:var(--accent);background:rgba(255,107,157,.15)}
+#truthMsg{margin-top:12px;font-weight:700;min-height:1.6em}
+#badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.badge{background:var(--card);padding:10px 14px;border-radius:12px;opacity:.35;filter:grayscale(1);transition:.4s;font-size:.9rem}
+.badge.got{opacity:1;filter:none;box-shadow:0 0 0 2px var(--accent3)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--accent3);color:#222;font-weight:800;padding:12px 20px;border-radius:999px;z-index:100;transition:transform .4s;box-shadow:var(--shadow);max-width:90vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+#timer{position:fixed;right:16px;bottom:16px;z-index:70;background:var(--card);padding:8px 14px;border-radius:999px;font-size:.85rem;box-shadow:var(--shadow)}
+footer{position:relative;z-index:1;text-align:center;padding:50px 6vw 90px;color:var(--muted)}
+.links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:90}
+@media(max-width:760px){#hero{grid-template-columns:1fr;text-align:center;padding-top:100px}.cta{justify-content:center}nav a{display:none}.orbit span{transform:rotate(var(--a)) translate(120px) rotate(calc(-1*var(--a)))}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div><div id="glow"></div><canvas id="confetti"></canvas>
+<header>
+  <div class="logo">krishia bastismo</div>
+  <nav aria-label="Sections">
+    <a href="#hero">Home</a><a href="#about">About</a><a href="#hobbies">Hobbies</a><a href="#skills">Skills</a><a href="#game">Play</a><a href="#truths">Fun</a>
+    <button class="pill" id="themeBtn" aria-label="Toggle light and dark theme">🌙 Theme</button>
+  </nav>
+</header>
+
+<section id="hero">
+  <div class="reveal in">
+    <div class="hello">👋 Hello, world!</div>
+    <h1>I’m <span class="name" id="name">Krishia Bastismo</span></h1>
+    <div class="typed" aria-live="polite">I am a <b id="typed"></b><span class="caret"></span></div>
+    <p class="hint" id="tagline"></p>
+    <div class="cta"><a class="btn primary" href="#game">🥁 Try the drum challenge</a><a class="btn ghost" href="#hobbies">Explore me ↓</a></div>
+    <p class="hint">Psst… try clicking my photo, or press <kbd>?</kbd> for a secret.</p>
+  </div>
+  <div class="photo-wrap reveal in">
+    <div class="orbit" id="orbit"></div>
+    <div class="photo" id="photo" role="button" tabindex="0" aria-label="My photo — click for a surprise">KB</div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="reveal">About <em>me</em></h2>
+  <p class="sub reveal">The short version — tap the numbers to see them count again.</p>
+  <div class="about-text reveal" id="aboutText"></div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<section id="hobbies">
+  <h2 class="reveal">Hobbies &amp; <em>interests</em></h2>
+  <p class="sub reveal">Hover or tap a card to flip it 👇</p>
+  <div class="grid" id="hobbyGrid"></div>
+</section>
+
+<section id="skills">
+  <h2 class="reveal">My <em>skills</em></h2>
+  <p class="sub reveal">Still learning — pick a category to filter.</p>
+  <div class="tags" id="skillTags" role="group" aria-label="Skill filters"></div>
+  <div id="skillList"></div>
+</section>
+
+<section id="game">
+  <h2 class="reveal">Snare drum <em>challenge</em></h2>
+  <p class="sub reveal">Hit the pad (tap, click or press Space) the moment a beat reaches the line. Turn your sound on! 🔊</p>
+  <div class="game reveal">
+    <div class="hud"><span>⏱ <b id="gTime">18</b>s</span><span>🥁 Score: <b id="gScore">0</b></span><span>🔥 Combo: <b id="gCombo">0</b></span><span>🏆 Best: <b id="gBest">0</b></span></div>
+    <div id="arena">
+      <div id="line"></div><div id="judge"></div>
+      <div class="overlay" id="gOverlay"><div><h3>Ready to march? 🥁</h3><p style="margin:8px 0 14px">Keep the cadence going — hit each beat right on the line.</p><button class="btn primary" id="gStart">Start the cadence</button></div></div>
+    </div>
+    <button class="btn primary" id="pad" aria-label="Snare drum pad — tap on the beat">🥁 TAP THE BEAT</button>
+  </div>
+</section>
+
+<section id="truths">
+  <h2 class="reveal">Two truths &amp; <em>a lie</em></h2>
+  <p class="sub reveal">Can you spot the fib about me?</p>
+  <div class="truths" id="truthBox"></div>
+  <div id="truthMsg" aria-live="polite"></div>
+</section>
+
+<section id="badgesSec">
+  <h2 class="reveal">Your <em>achievements</em></h2>
+  <p class="sub reveal">Unlock them all by exploring.</p>
+  <div id="badges"></div>
+</section>
+
+<footer>
+  <h2>Let’s connect!</h2>
+  <div class="links" id="links"></div>
+  <p>Made with HTML, CSS &amp; JavaScript · <span id="year"></span></p>
+</footer>
+
+<div id="timer">⏱ You’ve been here <b id="secs">0</b>s</div>
+<div id="toast" role="status"></div>
+
+<script>
+const CONFIG = {
+  name: "Krishia Bastismo",
+  roles: ["BSIT student 🎓", "snare drummer 🥁", "music lover 🎧", "movie fan 🎬", "peaceful walker 🚶‍♀️", "Keroppi fan 🐸", "online gamer 🎮"],
+  tagline: "Welcome! Stay a while — there’s a drum challenge, a quiz and a few secrets below.",
+  about: "Hi! I’m Krishia, a BSIT student at the University of Cebu Main Campus, proudly from Cebu City. I play the snare drum in a marching band, I love music and movies, I love walking because it keeps my mind at peace, and I play online games just like everybody else. My role models are Shawn Mendes and Anthony Bourdain.",
+  stats: [
+    { n: 1, label: "Snare drum in the marching band", suffix: "" },
+    { n: 2, label: "Role models", suffix: "" },
+    { n: 1, label: "Favorite Sanrio character", suffix: "" }
+  ],
+  hobbies: [
+    { emoji: "🥁", title: "Snare Drum", text: "I play snare drum in a marching band — keeping the beat for everyone to march to." },
+    { emoji: "🎵", title: "Music", text: "I love music! It’s a big part of my life." },
+    { emoji: "🎬", title: "Movies", text: "I love movies too!" },
+    { emoji: "🚶‍♀️", title: "Walking", text: "Walking keeps my mind at peace." },
+    { emoji: "🎮", title: "Online Games", text: "I play online games, just like everybody else!" },
+    { emoji: "🐸", title: "Keroppi", text: "My favorite Sanrio character is Keroppi!" },
+    { emoji: "🎶", title: "Shawn Mendes", text: "One of my role models." },
+    { emoji: "🍽️", title: "Anthony Bourdain", text: "Another one of my role models." }
+  ],
+  skills: [
+    { name: "Snare Drumming",  level: 85, cat: "Music" },
+    { name: "HTML & CSS",      level: 40, cat: "Web" },
+    { name: "JavaScript",      level: 30, cat: "Web" },
+    { name: "Teamwork",        level: 85, cat: "Soft skills" },
+    { name: "Communication",   level: 35, cat: "Soft skills" },
+    { name: "Problem Solving", level: 60, cat: "Soft skills" }
+  ],
+  truths: [
+    { text: "I play the snare drum in a marching band.", lie: false },
+    { text: "My favorite Sanrio character is Hello Kitty.", lie: true },
+    { text: "Walking is how I keep my mind at peace.", lie: false }
+  ],
+  links: [{ label: "📘 Facebook: Krishia Bastismo", href: "https://www.facebook.com/steezyrou" }]
+};
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+$("#name").textContent = CONFIG.name;
+$("#tagline").textContent = CONFIG.tagline;
+$("#aboutText").textContent = CONFIG.about;
+$("#year").textContent = new Date().getFullYear();
+
+["🎓","💡","🚀","🎧","⭐"].forEach((e, i, a) => {
+  const s = document.createElement("span");
+  s.textContent = e; s.style.setProperty("--a", (360 / a.length * i) + "deg");
+  $("#orbit").appendChild(s);
+});
+CONFIG.stats.forEach(s => {
+  const d = document.createElement("div");
+  d.className = "stat reveal"; d.tabIndex = 0;
+  d.innerHTML = `<strong data-n="${s.n}" data-s="${s.suffix}">0</strong>${s.label}`;
+  $("#stats").appendChild(d);
+});
+CONFIG.hobbies.forEach(h => {
+  const b = document.createElement("button");
+  b.className = "flip reveal";
+  b.setAttribute("aria-label", `${h.title}: ${h.text}`);
+  b.innerHTML = `<div class="flip-inner"><div class="face front"><div class="emoji">${h.emoji}</div><h3>${h.title}</h3></div><div class="face back">${h.text}</div></div>`;
+  b.addEventListener("click", () => { b.classList.toggle("on"); unlock("flip"); });
+  b.addEventListener("mouseenter", () => unlock("flip"));
+  $("#hobbyGrid").appendChild(b);
+});
+const cats = ["All", ...new Set(CONFIG.skills.map(s => s.cat))];
+cats.forEach((c, i) => {
+  const t = document.createElement("button");
+  t.className = "tag" + (i === 0 ? " on" : ""); t.textContent = c;
+  t.onclick = () => {
+    $$(".tag").forEach(x => x.classList.remove("on")); t.classList.add("on");
+    $$(".skill").forEach(s => s.classList.toggle("hide", c !== "All" && s.dataset.cat !== c));
+  };
+  $("#skillTags").appendChild(t);
+});
+CONFIG.skills.forEach(s => {
+  const d = document.createElement("div");
+  d.className = "skill reveal"; d.dataset.cat = s.cat;
+  d.innerHTML = `<div class="row"><span>${s.name}</span><span>${s.level}%</span></div><div class="bar"><i data-w="${s.level}"></i></div>`;
+  $("#skillList").appendChild(d);
+});
+CONFIG.truths.forEach(t => {
+  const b = document.createElement("button");
+  b.className = "truth reveal"; b.textContent = t.text;
+  b.onclick = () => {
+    $$(".truth").forEach(x => { x.disabled = true; });
+    $$(".truth").forEach((x, i) => x.classList.add(CONFIG.truths[i].lie ? "right" : "wrong"));
+    $("#truthMsg").textContent = t.lie ? "🎉 Correct! You spotted the lie!" : "😅 Nope! The highlighted green one is the lie.";
+    if (t.lie) confetti();
+    unlock("truth");
+  };
+  $("#truthBox").appendChild(b);
+});
+CONFIG.links.forEach(l => {
+  const a = document.createElement("a");
+  a.className = "btn ghost"; a.href = l.href; a.target = "_blank"; a.rel = "noopener"; a.textContent = l.label;
+  $("#links").appendChild(a);
+});
+
+(() => {
+  const el = $("#typed"); let r = 0, c = 0, del = false;
+  if (reduce) { el.textContent = CONFIG.roles[0]; return; }
+  (function tick() {
+    const word = CONFIG.roles[r];
+    el.textContent = word.slice(0, c);
+    if (!del && c === word.length) { del = true; return setTimeout(tick, 1100); }
+    if (del && c === 0) { del = false; r = (r + 1) % CONFIG.roles.length; }
+    c += del ? -1 : 1;
+    setTimeout(tick, del ? 35 : 70);
+  })();
+})();
+
+function countUp(el) {
+  const n = +el.dataset.n, s = el.dataset.s; let v = 0;
+  const step = Math.max(1, Math.ceil(n / 40));
+  const id = setInterval(() => { v = Math.min(n, v + step); el.textContent = v + s; if (v >= n) clearInterval(id); }, 30);
+}
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in");
+  const num = $("strong[data-n]", e.target); if (num) countUp(num);
+  const bar = $("i[data-w]", e.target); if (bar) bar.style.width = bar.dataset.w + "%";
+  io.unobserve(e.target);
+}), { threshold: .2 });
+$$(".reveal").forEach(el => io.observe(el));
+$$(".stat").forEach(s => s.addEventListener("click", () => countUp($("strong", s))));
+
+addEventListener("scroll", () => {
+  const h = document.documentElement;
+  const p = scrollY / (h.scrollHeight - innerHeight) * 100;
+  $("#progress").style.width = p + "%";
+  if (p > 96) unlock("explorer");
+  let cur = "";
+  $$("section").forEach(s => { if (scrollY >= s.offsetTop - 160) cur = s.id; });
+  $$("nav a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + cur));
+}, { passive: true });
+addEventListener("pointermove", e => { $("#glow").style.left = e.clientX + "px"; $("#glow").style.top = e.clientY + "px"; });
+
+$("#themeBtn").onclick = () => {
+  const r = document.documentElement, light = r.dataset.theme === "light";
+  r.dataset.theme = light ? "dark" : "light";
+  $("#themeBtn").textContent = light ? "🌙 Theme" : "☀️ Theme";
+  unlock("theme");
+};
+
+const BADGES = { flip: "🃏 Card Flipper", game: "🥁 Drummer", truth: "🕵️ Detective", theme: "🎨 Style Switcher", explorer: "🧭 Explorer", secret: "🤫 Secret Finder", stay: "⏳ 45-Second Club" };
+const got = new Set();
+Object.entries(BADGES).forEach(([k, v]) => {
+  const d = document.createElement("div"); d.className = "badge"; d.id = "b-" + k; d.textContent = v;
+  $("#badges").appendChild(d);
+});
+let toastT;
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600);
+}
+function unlock(k) {
+  if (got.has(k)) return; got.add(k);
+  $("#b-" + k).classList.add("got");
+  toast(`🏅 Achievement unlocked: ${BADGES[k]}  (${got.size}/${Object.keys(BADGES).length})`);
+  if (got.size === Object.keys(BADGES).length) setTimeout(() => { toast("👑 You unlocked everything! Legend."); confetti(); }, 2800);
+}
+function secret() { unlock("secret"); confetti(); toast("🤫 Secret: I wrote all of this by hand — and I’m proud of it!"); }
+$("#photo").addEventListener("click", secret);
+$("#photo").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") secret(); });
+addEventListener("keydown", e => { if (e.key === "?") secret(); });
+
+let sec = 0;
+setInterval(() => {
+  sec++; $("#secs").textContent = sec;
+  if (sec === 45) { unlock("stay"); confetti(); toast("🎉 You’ve stayed 45 seconds — thank you!"); }
+}, 1000);
+
+(() => {
+  const arena = $("#arena"), ov = $("#gOverlay"), judge = $("#judge"), pad = $("#pad");
+  const FALL = 1.6, PATTERN = [0, 1, 2, 2.5, 3, 4, 4.5, 5, 6, 6.5, 7];
+  let beats = [], running = false, t0 = 0, score = 0, combo = 0, hits = 0, dur = 18, ac, raf, jt;
+  let best = 0; try { best = +(localStorage.getItem("bestDrum") || 0); } catch (e) {}
+  $("#gBest").textContent = best;
+
+  function snare() {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state !== "running") ac.resume();
+      const n = ac.currentTime;
+      const len = Math.floor(ac.sampleRate * .2), d = new Float32Array(len);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      const buf = ac.createBuffer(1, len, ac.sampleRate); buf.copyToChannel(d, 0);
+      const src = ac.createBufferSource(); src.buffer = buf;
+      const hp = ac.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 1500;
+      const g = ac.createGain(); g.gain.setValueAtTime(1, n); g.gain.exponentialRampToValueAtTime(.001, n + .18);
+      src.connect(hp); hp.connect(g); g.connect(ac.destination); src.start(n);
+      const o = ac.createOscillator(), og = ac.createGain(); o.type = "triangle";
+      o.frequency.setValueAtTime(220, n); o.frequency.exponentialRampToValueAtTime(110, n + .08);
+      og.gain.setValueAtTime(.9, n); og.gain.exponentialRampToValueAtTime(.001, n + .12);
+      o.connect(og); og.connect(ac.destination); o.start(n); o.stop(n + .15);
+    } catch (e) {}
+  }
+  function say(txt, color) { judge.textContent = txt; judge.style.color = color; judge.style.opacity = 1; clearTimeout(jt); jt = setTimeout(() => judge.style.opacity = 0, 450); }
+  function setStats() { $("#gScore").textContent = score; $("#gCombo").textContent = combo; }
+  function now() { return (performance.now() - t0) / 1000; }
+
+  function hit() {
+    if (!running) return;
+    snare();
+    pad.classList.add("hitfx"); setTimeout(() => pad.classList.remove("hitfx"), 90);
+    const t = now(); let b = null, bd = 9;
+    beats.forEach(x => { if (!x.done) { const df = Math.abs(t - x.t); if (df < bd) { bd = df; b = x; } } });
+    if (!b || bd > .22) { combo = 0; say("Off beat!", "#ff6b9d"); setStats(); return; }
+    b.done = true; b.el.remove(); hits++; combo++;
+    let pts, txt, col;
+    if (bd < .08) { pts = 100; txt = "PERFECT!"; col = "#ffd166"; }
+    else if (bd < .15) { pts = 60; txt = "Great!"; col = "#06d6a0"; }
+    else { pts = 30; txt = "OK"; col = "#4cc9f0"; }
+    score += pts + Math.min(combo, 20) * 2; say(txt, col); setStats();
+  }
+  function frame() {
+    if (!running) return;
+    const t = now(), H = arena.clientHeight, lineY = H - 62;
+    beats.forEach(b => {
+      if (b.done) return;
+      const y = lineY - (b.t - t) / FALL * lineY;
+      b.el.style.transform = `translateY(${y - 23}px)`;
+      b.el.style.visibility = y > -30 ? "visible" : "hidden";
+      if (t > b.t + .22) { b.done = true; b.el.remove(); combo = 0; say("Miss", "#ff6b9d"); setStats(); }
+    });
+    $("#gTime").textContent = Math.max(0, Math.ceil(dur - t));
+    if (t >= dur) return end();
+    raf = requestAnimationFrame(frame);
+  }
+  function end() {
+    running = false; cancelAnimationFrame(raf);
+    $$(".beat", arena).forEach(b => b.remove());
+    const acc = Math.round(hits / beats.length * 100);
+    if (score > best) { best = score; try { localStorage.setItem("bestDrum", best); } catch (e) {} }
+    $("#gBest").textContent = best;
+    const msg = acc >= 85 ? "Section leader material! 🥁👑" : acc >= 60 ? "Solid cadence — nice!" : "Warm-up round. March again!";
+    ov.style.display = "grid";
+    ov.innerHTML = `<div><h3>Score: ${score}</h3><p style="margin:8px 0 14px">${acc}% of beats hit · ${msg}</p><button class="btn primary" id="gStart">Play again</button></div>`;
+    $("#gStart").onclick = start;
+    if (acc >= 80) confetti();
+    unlock("game");
+  }
+  function start() {
+    $$(".beat", arena).forEach(b => b.remove());
+    beats = []; score = 0; combo = 0; hits = 0; setStats();
+    for (let r = 0; r < 4; r++) PATTERN.forEach(p => {
+      const el = document.createElement("div"); el.className = "beat"; el.style.visibility = "hidden";
+      arena.appendChild(el); beats.push({ t: 1.6 + (r * 8 + p) * .5, el, done: false });
+    });
+    dur = beats[beats.length - 1].t + .8;
+    ov.style.display = "none"; running = true; t0 = performance.now();
+    try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.resume) ac.resume(); } catch (e) {}
+    raf = requestAnimationFrame(frame);
+  }
+  $("#gStart").onclick = start;
+  pad.addEventListener("pointerdown", e => { e.preventDefault(); hit(); });
+  arena.addEventListener("pointerdown", e => { if (running) { e.preventDefault(); hit(); } });
+  addEventListener("keydown", e => { if (running && (e.code === "Space" || ["d","f","j","k"].includes(e.key))) { e.preventDefault(); if (!e.repeat) hit(); } });
+})();
+
+function confetti() {
+  if (reduce) return;
+  const cv = $("#confetti"), ctx = cv.getContext("2d");
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ["#ff6b9d", "#4cc9f0", "#ffd166", "#06d6a0", "#fff"];
+  const ps = Array.from({ length: 130 }, () => ({ x: innerWidth / 2, y: innerHeight / 2, vx: (Math.random() - .5) * 16, vy: Math.random() * -14 - 3, s: Math.random() * 8 + 4, c: cols[Math.random() * cols.length | 0], r: Math.random() * 6 }));
+  let f = 0;
+  (function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += .35; p.r += .2; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); ctx.restore(); });
+    if (++f < 120) requestAnimationFrame(draw); else ctx.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+setTimeout(() => toast("👋 Hi! Scroll down — there are achievements to unlock."), 4000);
+</script>
+</body>
+</html>
